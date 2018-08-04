@@ -161,6 +161,31 @@
         </Scripts>
       </CheckButton>
 
+      <CheckButton name="Atr_QuickScan_Button" inherits="UICheckButtonTemplate">
+        <Size><AbsDimension x="20" y="20" /></Size>
+        <Anchors>
+          <Anchor point="TOP" relativeTo="Atr_Adv_Search_Button" relativePoint="TOPRIGHT">
+            <Offset><AbsDimension x="60"/></Offset>
+          </Anchor>
+        </Anchors>
+        <Layers>
+          <Layer level="BACKGROUND">
+            <FontString inherits="GameFontNormalSmall" text="Quick scan">
+              <Anchors>
+                <Anchor point="LEFT" relativePoint="RIGHT">
+                  <Offset><AbsDimension x="2" y="1"/></Offset>
+                </Anchor>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
+        <Scripts>
+          <OnClick>
+            AUCTIONATOR_ENABLE_QUICK_SCAN = self:GetChecked()
+          </OnClick>
+        </Scripts>
+      </CheckButton>
+
       <Button name="Auctionator1Button" inherits="Atr_SmallButtonTemplate" text="Options...">
         <Size><AbsDimension x="74" y="18"/> </Size>
         <Anchors><Anchor point="TOPRIGHT" relativePoint="TOPRIGHT"><Offset><AbsDimension x="-14" y="-38"/></Offset></Anchor></Anchors>
@@ -378,6 +403,72 @@
             <Scripts>
               <OnClick>
                 Atr_CreateAuction_OnClick()
+              </OnClick>
+            </Scripts>
+          </Button>
+
+          <Button name="Atr_SetMaxItems" inherits="UIPanelButtonTemplate"  text="MAX" disabled="true">
+            <Size><AbsDimension x="40" y="20"/>  </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT"><Offset><AbsDimension x="140" y="-190"/></Offset></Anchor>
+            </Anchors>
+            <Scripts>
+              <OnClick>
+                local max_stacksize, items_owned = select(8,GetAuctionSellItemInfo())
+                if not max_stacksize or max_stacksize == 0 or not items_owned or items_owned == 0 then
+                  return
+                end
+                local calculated_stacksize = math.floor( items_owned / Atr_Batch_NumAuctions:GetText())
+                local to_set_stacksize = calculated_stacksize
+
+                if calculated_stacksize > max_stacksize then
+                 to_set_stacksize = max_stacksize
+                end
+
+                Atr_Batch_Stacksize:SetText(to_set_stacksize)
+              </OnClick>
+            </Scripts>
+          </Button>
+
+          <Button name="Atr_SellBigStack" inherits="UIPanelButtonTemplate"  text="Sell BIG stack" disabled="true">
+            <Size><AbsDimension x="100" y="20"/>  </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT"><Offset><AbsDimension x="12" y="-190"/></Offset></Anchor>
+            </Anchors>
+            <Scripts>
+              <OnClick>
+                local max_stacksize, item_amount = select(8,GetAuctionSellItemInfo())
+                if not max_stacksize or max_stacksize == 0 or not item_amount or item_amount == 0 then
+                  return
+                end
+                local num_stacks = math.floor(item_amount/max_stacksize)
+
+                local set_stack_to = 1
+                local set_items_to = item_amount
+                if num_stacks > 1 then
+                  set_items_to = max_stacksize
+                  set_stack_to = num_stacks
+                end
+
+                Atr_Batch_NumAuctions:SetText(set_stack_to)
+                Atr_Batch_Stacksize:SetText(set_items_to)
+              </OnClick>
+            </Scripts>
+          </Button>
+
+          <Button name="Atr_SellStacksOfOne" inherits="UIPanelButtonTemplate"  text="Sell stacks of 1" disabled="true">
+            <Size><AbsDimension x="100" y="20"/>  </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT"><Offset><AbsDimension x="12" y="-240"/></Offset></Anchor>
+            </Anchors>
+            <Scripts>
+              <OnClick>
+                local item_amount = select(9,GetAuctionSellItemInfo())
+                if not item_amount or item_amount == 0 then
+                  return
+                end
+                Atr_Batch_NumAuctions:SetText(item_amount)
+                Atr_Batch_Stacksize:SetText(1)
               </OnClick>
             </Scripts>
           </Button>

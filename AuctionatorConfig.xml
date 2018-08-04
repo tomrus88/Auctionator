@@ -141,6 +141,54 @@
         </Scripts>
       </Frame>
 
+      <Frame name="AuctionatorOption_Quick_Scan_Pages_Frame">
+        <Size>
+          <AbsDimension x="180" y="30"/>
+        </Size>
+        <Anchors>
+          <Anchor point="LEFT">
+            <Offset>
+              <AbsDimension x="20"/>
+            </Offset>
+          </Anchor>
+          <Anchor point="RIGHT">
+            <Offset>
+              <AbsDimension x="-20"/>
+            </Offset>
+          </Anchor>
+          <Anchor point="TOP">
+            <Offset>
+              <AbsDimension y="-115"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Layers>
+          <Layer level="BACKGROUND">
+            <FontString inherits="GameFontHighlight" name="$parent_Text" text="Quick scan pages:">
+              <Anchors>
+                <Anchor point="LEFT" relativePoint="LEFT" relativeTo="$parent">
+                  <Offset>
+                    <AbsDimension x="0" y="0"/>
+                  </Offset>
+                </Anchor>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
+        <Frames>
+          <EditBox autoFocus="false" bytes="64" inherits="InputBoxTemplate" name="AuctionatorOption_Quick_Scan_Pages" numeric="true">
+            <Size>
+              <AbsDimension x="24" y="20"/>
+            </Size>
+            <Anchors>
+              <Anchor point="LEFT">
+                <Offset x="90" y="0"/>
+              </Anchor>
+            </Anchors>
+          </EditBox>
+        </Frames>
+      </Frame>
+
       <Frame inherits="Atr_SingleOptionTemplate" name="AuctionatorOption_Show_StartingPrice">
         <Anchors>
           <Anchor point="TOP">

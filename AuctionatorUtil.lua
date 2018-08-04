@@ -56,20 +56,5 @@ function Auctionator.Util.FlatPrint( t )
 end
 
 function Auctionator.Util.UTF8_Truncate( string, options )
-  options = options or {}
-  local newLength = options.newLength or 127
-
-  if string:len() <= newLength then
-    return string
-  end
-
-  local position, char;
-
-  for position = newLength, 1, -1 do
-    char = string:byte( position + 1 )
-
-    if bit.band( char, 0xC0 ) == 0x80 then
-      return string:sub( 1, position - 1 )
-    end
-  end
+  return string
 end
