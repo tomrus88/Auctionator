@@ -73,7 +73,7 @@
       </Button>
 
 
-      <EditBox name="Atr_Search_Box" autoFocus="false" inherits="InputBoxTemplate" bytes="64">
+      <EditBox name="Atr_Search_Box" autoFocus="false" inherits="InputBoxTemplate" bytes="128">
         <Size><AbsDimension x="260" y="20"/></Size>
         <Anchors><Anchor point="TOPLEFT"><Offset><AbsDimension x="20" y="-45"/></Offset></Anchor></Anchors>
         <FontString inherits="ChatFontNormal" />
