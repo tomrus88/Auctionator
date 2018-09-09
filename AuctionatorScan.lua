@@ -740,7 +740,7 @@ function AtrSearch:Continue()
 
     -- sort search result by buyout (total, so just the cheapest stacks of 1 item will be used to determine price)
     SortAuctionClearSort("list")
-    SortAuctionSetSort("list", "buyout")
+    SortAuctionSetSort("list", "unitprice")
     SortAuctionApplySort("list")
 
     QueryAuctionItems (queryString, minLevel, maxLevel, self.current_page, nil, nil, false, exactMatch, filter )
