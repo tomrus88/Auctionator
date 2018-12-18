@@ -413,9 +413,9 @@ local function Atr_RestoreDElog()
     AUCTIONATOR_DE_DATA = {}
 
     zc.CopyDeep (AUCTIONATOR_DE_DATA, AUCTIONATOR_DE_DATA_BAK)
-    zc.msg_anm ("Disenchant data restored.  Number of entries:", #AUCTIONATOR_DE_DATA_BAK);
+    zc.msg_anm (ZT("Disenchant data restored. Number of entries:"), #AUCTIONATOR_DE_DATA_BAK);
   else
-    zc.msg_anm ("No data available to be restored");
+    zc.msg_anm (ZT("No data available to be restored."));
   end
 
 end
@@ -683,7 +683,7 @@ local function Atr_ModTradeSkillFrame()
     button:SetPoint("RIGHT", "TradeSkillFrame", "RIGHT", -35, 100);
 
     button:SetHeight (20)
-    button:SetText("AH")
+    button:SetText(ZT("AH"))
     button:SetNormalFontObject(_G["GameFontNormalSmall"])
     button:SetHighlightFontObject(_G["GameFontNormalSmall"])
     button:SetDisabledFontObject(_G["GameFontNormalSmall"])
@@ -1685,7 +1685,7 @@ function Atr_LogMsg (itemlink, itemcount, price, numstacks)
   logmsg = logmsg.."   "..zc.priceToString(price);
 
   if (numstacks > 1 and itemcount > 1) then
-    logmsg = logmsg.."  per stack";
+    logmsg = logmsg.."  "..ZT("per stack")..".";
   end
 
 
@@ -2108,7 +2108,7 @@ function Atr_ShowItemNameAndTexture(itemName)
     itemName = scn.itemName;
 
     if (zc.IsBattlePetLink(scn.itemLink)) then
-      level = " (Level "..scn.itemLevel..")"
+      level = " ("..ZT("Level").." "..scn.itemLevel..")"
     end
   end
 
@@ -3113,7 +3113,7 @@ end
 function Atr_SetDepositText()
   Auctionator.Debug.Message( 'Atr_SetDepositText' )
 
-  _, auctionCount = Atr_GetSellItemInfo();
+  local _, auctionCount = Atr_GetSellItemInfo();
 
   if (auctionCount > 0) then
     local duration = UIDropDownMenu_GetSelectedValue(Atr_Duration);
@@ -3161,7 +3161,7 @@ end
 function Atr_GetUCIcon (itemLink)
   Auctionator.Debug.Message( 'Atr_GetUCIcon', itemLink )
 
-  local icon = "|TInterface\\BUTTONS\\\UI-PassiveHighlight:18:18:0:0|t "
+  local icon = "|TInterface\\BUTTONS\\UI-PassiveHighlight:18:18:0:0|t "
 
   local undercutFound = false
 
@@ -3176,9 +3176,9 @@ function Atr_GetUCIcon (itemLink)
       icon = "|TInterface\\AddOns\\Auctionator\\Images\\CrossAndCheck:18:18:0:0|t "
       undercutFound = true;
     elseif (scan.yourBestPrice <= absBestPrice) then
-      icon = "|TInterface\\RAIDFRAME\\\ReadyCheck-Ready:18:18:0:0|t "
+      icon = "|TInterface\\RAIDFRAME\\ReadyCheck-Ready:18:18:0:0|t "
     else
-      icon = "|TInterface\\RAIDFRAME\\\ReadyCheck-NotReady:18:18:0:0|t "
+      icon = "|TInterface\\RAIDFRAME\\ReadyCheck-NotReady:18:18:0:0|t "
       undercutFound = true;
     end
   end
@@ -3289,12 +3289,9 @@ function Atr_HEntryOnClick(self)
     gHentryTryAgain = nil;
   end
 
-  local _, itemLink;
-  local IDstring;
   local entryIndex = line:GetID();
-
-  itemName = gHistoryItemList[entryIndex].name;
-  itemLink = gHistoryItemList[entryIndex].link;
+  local itemName = gHistoryItemList[entryIndex].name;
+  local itemLink = gHistoryItemList[entryIndex].link;
 
   if (IsAltKeyDown() and Atr_IsModeActiveAuctions()) then
     Atr_Cancel_Undercuts_OnClick (itemName)
@@ -3643,7 +3640,7 @@ function Atr_ShowSearchSummary()
         end
 
         if (zc.IsBattlePetLink (scn.itemLink)) then
-          iLevelStr = " (Level "..scn.itemLevel..")"
+          iLevelStr = " ("..ZT("Level").." "..scn.itemLevel..")"
         end
 
         lineEntry_text:SetText (icon.."  "..scn.itemName..iLevelStr)
@@ -3692,7 +3689,7 @@ function Atr_ShowCurrentAuctions()
     scn = Atr_FindScan(nil)
   end
 
-  numrows = #scn.sortedData
+  local numrows = #scn.sortedData
 
   if (numrows > 0) then
     Atr_Col1_Heading:Show();
@@ -4160,7 +4157,6 @@ function Atr_CancelAuction_ByIndex(index)
   if (#gAtr_Owner_Item_Indices == 0) then
 
     local numInList = Atr_GetNumAuctionItems ("owner");
-    local i;
     local x = 1;
 
     for i = 1,numInList do
@@ -4176,7 +4172,7 @@ function Atr_CancelAuction_ByIndex(index)
 
   -- cancel the last item in the list and remove it
 
-  local numInMatchList = #gAtr_Owner_Item_Indices;
+  local numInMatchList, i = #gAtr_Owner_Item_Indices;
 
   for x = numInMatchList,1,-1 do
 
@@ -4661,7 +4657,6 @@ function Atr_BuildGlobalHistoryList()
     Atr_BuildActiveAuctions()
   end
 
-  local info, IDstring
   for IDstring, info in pairs (gActiveAuctions) do
     if (info.link and info.count ~= 0) then
       table.insert (gHistoryItemList, info)
